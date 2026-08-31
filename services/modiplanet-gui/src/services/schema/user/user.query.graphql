@@ -1,0 +1,42 @@
+query Profile {
+  profile {
+    id
+    userId
+    birthdate
+    name
+    nickname
+    countryCallingCode
+    phoneNumber
+    thumbnailUrl
+    codingExperienceTypeList
+    contactEmail
+  }
+}
+
+query User {
+  user {
+    id
+    uuid
+    email
+    signUpType
+    privacyPolicyConsent
+    termsOfServiceConsent
+    personalInfoConsent
+    emailMarketingConsent
+    smsMarketingConsent
+    marketingConsentSmsUpdatedAt
+    marketingConsentEmailUpdatedAt
+    roleType
+    createdAt
+    updatedAt
+    isMinor
+    hasParentalConsent
+    protector {
+      name
+      email
+      countryCallingCode
+      phoneNumber
+      verified
+    }
+  }
+}

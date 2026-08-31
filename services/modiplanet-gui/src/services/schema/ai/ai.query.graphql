@@ -1,0 +1,29 @@
+query aiModel($id: ID!) {
+  aiModel(where: { id: $id }) {
+    aiModelCategoryId
+    batchSize
+    classifiers {
+      label
+      ... on PlatClassifier {
+        __typename
+        dataset
+        label
+      }
+    }
+    moduleType
+    epoch
+    id
+    learningRate
+    modelUrl
+    name
+    validationDataRate
+    aiModelCategory {
+      type
+      id
+    }
+  }
+}
+
+query CheckAIModelNameDuplicate($input: CheckAIModelNameDuplicateInput!) {
+  checkAIModelNameDuplicate(input: $input)
+}

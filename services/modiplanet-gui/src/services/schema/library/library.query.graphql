@@ -1,0 +1,37 @@
+query Library($input: LibraryInput!) {
+  library(input: $input) {
+    id
+    viewCount
+    language
+    title
+    content
+    attachments {
+      id
+      name
+      url
+    }
+    createdAt
+    isNew
+    isExposed
+    cursorInfo {
+      before
+      after
+    }
+  }
+}
+
+query LibraryConnection($input: LibraryConnectionInput!) {
+  libraryConnection(input: $input) {
+    nodes {
+      id
+      viewCount
+      language
+      title
+      content
+      createdAt
+      isNew
+      isExposed
+    }
+    totalCount
+  }
+}

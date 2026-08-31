@@ -1,0 +1,4 @@
+# update courseAttendanceResult
+mutation updateCourseAttendanceResult($input: UpdateCourseAttendanceResultInput!) {
+  updateCourseAttendanceResult(input: $input)
+}

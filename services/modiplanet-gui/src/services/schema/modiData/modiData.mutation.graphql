@@ -1,0 +1,29 @@
+mutation CreateModiData($input: CreateModiDataInput!) {
+  createModiData(input: $input) {
+    id
+  }
+}
+
+mutation CreateModiDataList($input: CreateModiDataListInput!) {
+  createModiDataList(input: $input) {
+    ids
+  }
+}
+
+mutation DeleteModiData($input: DeleteModiDataInput!) {
+  deleteModiData(input: $input) {
+    success
+  }
+}
+
+mutation DeleteModiDataList($input: DeleteModiDataListInput!) {
+  deleteModiDataList(input: $input) {
+    success
+  }
+}
+
+mutation UpdateModiData($input: UpdateModiDataInput!) {
+  updateModiData(input: $input) {
+    id
+  }
+}

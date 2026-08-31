@@ -1,0 +1,79 @@
+name: PR Agent - Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number'
+        required: true
+        type: number
+      actions:
+        description: 'Actions to run (comma-separated)'
+        required: true
+        type: choice
+        options:
+          - all
+          - summary
+          - review
+          - improve
+          - summary,review
+          - review,improve
+        default: all
+
+jobs:
+  pr-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set PR number
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "number=${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
+            echo "actions=${{ inputs.actions }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+            if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
+              echo "actions=all" >> $GITHUB_OUTPUT
+            else
+              echo "actions=review" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: PR Summary
+        if: contains(steps.pr.outputs.actions, 'all') || contains(steps.pr.outputs.actions, 'summary')
+        run: |
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/summary" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d '{
+              "prNumber": ${{ steps.pr.outputs.number }},
+              "repoName": "${{ github.repository }}"
+            }'
+
+      - name: PR Review
+        if: contains(steps.pr.outputs.actions, 'all') || contains(steps.pr.outputs.actions, 'review')
+        run: |
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/review" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d '{
+              "prNumber": ${{ steps.pr.outputs.number }},
+              "repoName": "${{ github.repository }}"
+            }'
+
+      - name: PR Improve
+        if: contains(steps.pr.outputs.actions, 'all') || contains(steps.pr.outputs.actions, 'improve')
+        run: |
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/improve" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d '{
+              "prNumber": ${{ steps.pr.outputs.number }},
+              "repoName": "${{ github.repository }}"
+            }'

@@ -1,0 +1,189 @@
+# 액티비티 상세 조회
+query courseActivity($id: ID!) {
+  courseActivity(where: {id: $id}) {
+    ... on CourseActivityTextBook {
+      id
+      name
+      dType
+      state
+      idx
+      textBook {
+        content
+        id
+      }
+      supplementaryData {
+        id
+        activityId
+        providerType
+        videoUrl
+        title
+        description
+        hintTitle
+        hintDescription
+      }
+      activityHistoryItem {
+        isCompleted
+        progressRate
+      }
+    }
+    ... on CourseActivityPdf {
+      id
+      name
+      dType
+      state
+      idx
+      pdf {
+        totalCount
+        url
+        id
+      }
+      supplementaryData {
+        id
+        activityId
+        providerType
+        videoUrl
+        title
+        description
+        hintTitle
+        hintDescription
+      }
+      activityHistoryItem {
+        isCompleted
+        progressRate
+        detail {
+          ... on ActivityPDFHistory {
+            lastPage
+          }
+        }
+      }
+    }
+    ... on CourseActivityCoding {
+      id
+      name
+      dType
+      state
+      idx
+      coding {
+        codingType
+      }
+      supplementaryData {
+        id
+        activityId
+        providerType
+        videoUrl
+        title
+        description
+        hintTitle
+        hintDescription
+      }
+      activityHistoryItem {
+        progressRate
+        isCompleted
+      }
+    }
+    ... on CourseActivityQuiz {
+      id
+      name
+      dType
+      state
+      idx
+      supplementaryData {
+        id
+        activityId
+        providerType
+        videoUrl
+        title
+        description
+        hintTitle
+        hintDescription
+      }
+      quiz {
+        id
+        title
+        questions {
+          id
+          idx
+          subText
+          text
+          type
+          choices {
+            id
+            isCorrect
+            text
+          }
+        }
+      }
+      activityHistoryItem {
+        isCompleted
+        progressRate
+      }
+    }
+    ... on CourseActivityVod {
+      id
+      name
+      dType
+      state
+      idx
+      vod {
+        id
+        durationInSec
+        providerType
+        url
+      }
+      supplementaryData {
+        id
+        activityId
+        providerType
+        videoUrl
+        title
+        description
+        hintTitle
+        hintDescription
+      }
+      items {
+        dType
+        id
+        subTitle
+        title
+        pinPosition
+        ... on CourseVodItemText {
+          id
+          dType
+          text {
+            content
+            id
+          }
+          pinPosition
+          title
+        }
+        ... on CourseVodItemQuiz {
+          id
+          dType
+          quiz {
+            questions {
+              type
+              text
+              subText
+              id
+              choices {
+                isCorrect
+                text
+                id
+              }
+            }
+          }
+          title
+        }
+      }
+      activityHistoryItem {
+        isCompleted
+        detail {
+          ... on ActivityVODHistory {
+            videoPlaybackPosition
+          }
+        }
+        progressRate
+      }
+    }
+  }
+}

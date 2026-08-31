@@ -1,0 +1,28 @@
+mutation CreateContact($input: CreateContactInput!) {
+  createContact(input: $input) {
+    id
+    userId
+    subject
+    title
+    content
+    fileList {
+      name
+      url
+    }
+    createdAt
+    updatedAt
+    state
+    responseMessage
+    respondedAt
+  }
+}
+
+mutation DeleteContact($input: DeleteContactInput!) {
+  deleteContact(input: $input) {
+    success
+  }
+}
+
+mutation MarkNotificationAsRead($input: MarkNotificationAsReadInput!) {
+  markNotificationAsRead(input: $input)
+}

@@ -1,0 +1,57 @@
+query CourseLesson($where: CourseLessonWhere!) {
+  courseLesson(where: $where) {
+    effectiveStatus
+    steps {
+      step {
+        id
+        dType
+        ... on CourseStepCoding {
+          coding {
+            codingType
+            learningObjective
+            activity
+          }
+        }
+        ... on CourseStepPdf {
+          pdf {
+            file {
+              url
+            }
+            totalCount
+          }
+        }
+        ... on CourseStepPpt {
+          ppt {
+            file {
+              url
+            }
+            slideCount
+            analysisStatus
+            convertedPdfUrl
+            videoOverlays {
+              page
+              mediaFile
+              videoUrl
+              x
+              y
+              width
+              height
+            }
+          }
+        }
+        ... on CourseStepVod {
+          vod {
+            url
+          }
+        }
+        ... on CourseStepYoutube {
+          youtube {
+            url
+          }
+        }
+      }
+      idx
+      effectiveStatus
+    }
+  }
+}

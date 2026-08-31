@@ -1,0 +1,40 @@
+# courseTutorScheduleGroupConnection 튜터의 스케줄그룹 리스트
+query courseTutorScheduleGroupConnection($where: CourseTutorScheduleGroupConnectionWhere, $orderBy: CourseTutorScheduleGroupConnectionOrder, $offset: Int, $first: Int) {
+  courseTutorScheduleGroupConnection(
+    where: $where
+    orderBy: $orderBy
+    offset: $offset
+    first: $first
+  ) {
+    nodes {
+      id
+      deletedAt
+      createdAt
+      endDateTime
+      startDateTime
+      loop
+      tutorId
+      updatedAt
+    }
+  }
+}
+
+# courseTutorScheduleConnection 튜터 스케줄 디테일 목록 조회
+query courseTutorScheduleConnection($where: CourseTutorScheduleConnectionWhere, $orderBy: CourseTutorScheduleConnectionOrder, $offset: Int, $first: Int) {
+  courseTutorScheduleConnection(
+    where: $where
+    orderBy: $orderBy
+    offset: $offset
+    first: $first
+  ) {
+    nodes {
+      id
+      tutorScheduleGroupId
+      updatedAt
+      startDateTime
+      endDateTime
+      deletedAt
+      createdAt
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "modiplanet-localization",
+  "private_key_id": "a70734a99c9cfb242e44727695b56f7cf3d553b4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCTHGMMNuuJrkpd\nmAUkGA0WfcPPG7tpRQ79vpyUfkJLgEFjYhctmCGEhOQ1gHWqVcCXxScb715G2TMv\nfKJkN/myLWSW2rBQi7Jgm3QSr01Njg2QVcKoARY0wBGO9LTVe1+oUkDCreMIvN5r\nKnZyCkG8B4BHMpMST6K2PDrcNpoeCJjYX+FsyNPm+KNR4x12y7Anij7kBZUJyjVu\n83vcfxSaCbRAtTV+b32RCalqmK50jHCfd7oEReupylm2aY/U/TFE67LJVrIJnBnW\nVS65rshIhoBBaNFp5F54vkVqIcdTaYwfCR48ilcq8J/BOL9rs/AgIGACbLPhPgGr\nwHX5chGPAgMBAAECggEARJfx3xokjVgFOMrPatsEDz6o9IL7ycP3j303SU3t34J3\n+r0cDZhn2ICWYBP7yWaenKXC7JWaIfLYmQXGOnCXLutXgbeKiqP4km8pmiS/KLBZ\nxrkWQHvxPLtp9HxJbVlPaw6fP6cQu1xFYTa1b8s0h1YADDKavOkA93PyBgg3qFSo\ntNF0fw27ePPL+INMs3+qkbJ8F0ixuQ3J/B9zeWXujozEqOQ0F6krQG+YSkN7qPsW\nlUD4m0niDsHg9c4kmSaFaIQ9Q0G7FeWnxPpAsgNer0Jt/udpC0tiIeOcXqdV5/0c\n1R6j/DfqBjlIDmlq5DG0g5GZzl+ZQXfLWvbo2iGEYQKBgQDLRHtHSMnw99cprABO\n0FYPVTq2YblsgOt7ueCbY1khLQGGkTBIs6HI8D33MXmoFhDtNDMBFFWxgkJyWug/\n4Q83PG9DYT+xJu6RYUocZJBg7oLsJMgsk2uHdKwb5SN1Nt/1isXe2Qr8Mnj85oF7\nsO81Sqiy6fhamLUZJHz+MkjCRwKBgQC5RmZO+Sr7NNZ40wv/ZpHK9zrb/AQjBjw1\nsfqRlV5h1mSn8ys12GGcfMg0fp94MuV5zHwdnbNclKPeyBGE+L7j8PtSpHd1khAw\nfO9HG8yd2bYgVxc8g92+UzlMvIFbaopRi+gGJXRYY58bz7qfFMnIrfmVRSUmn7xj\nvQuB9NDSeQKBgQC37eG3YTAKMdmqRY+JwY7+FNspyUfl3Mo4jLunH8C4+maVA6+z\nOYg9sNYBZe11oXHzkfZNFb9s/jduDsB1fQstqivrxoXBoT7ioixTgNP8QhaJ48aW\nP1dfnL1YCIGLQPpqzwW5XqBIEMvV3CZybGonyMTaEEjAgcntVE0eHxYjZQKBgBrv\nmUAyCYWsEOJQDJZ9GwUfHHePFCrjZS2JSpyP0sD2onuoZsfVRZuyqIi5QAYBoEss\n536GxuTW11w0ShfC8j3Bc0h4kMWPDrt97muwJvdsB4Z8IuyxXzOkddgqL8RSoPlq\nFbmPCHMxSJiKgt9N7mg2ouqIuvX6kzEM8vdZ2GJBAoGBALGqCKoGAWHVBBoookHf\n6pjfaRB4Fgy/O1REa90L5BET8inxoKQkq0oghq/2tXf1vKA0rzs44aRNeThUIgi5\nG90luICw9NLv+D0GevlDEZF8/4FG01gsA3OEoojbmauxg+9rwsXHD9gEAyziPIHR\nGptK6Xz3vMXA67coPxnDFsy/\n-----END PRIVATE KEY-----\n",
+  "client_email": "modiplanet-web-dev@modiplanet-localization.iam.gserviceaccount.com",
+  "client_id": "107045676471214962098",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/modiplanet-web-dev%40modiplanet-localization.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

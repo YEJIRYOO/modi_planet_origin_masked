@@ -1,0 +1,60 @@
+query boardNoticeConnection($first: Int!, $offset: Int, $langType: LangType, $where: BoardNoticeConnectionWhere, $field: BoardNoticeConnectionFieldType, $direction: OrderDirectionType) {
+  boardNoticeConnection(
+    first: $first
+    offset: $offset
+    langType: $langType
+    where: $where
+    orderBy: {direction: $direction, field: $field}
+  ) {
+    nodes {
+      id
+      title
+      content
+      isTop
+      isView
+      serviceType
+      createdAt
+      isNew
+    }
+    totalCount
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasBeforePage
+    }
+  }
+}
+# get notice
+query boardNotice($where: BoardNoticeWhere!) {
+  boardNotice(where: $where) {
+    id
+    title
+    content
+    isTop
+    isView
+    serviceType
+    createdAt
+    viewCount
+    files{
+      url
+      name
+    }
+    dataByLanguages {
+      title
+      content
+      langType
+      files {
+        id
+        name
+        type
+        url
+        langType
+      }
+    }
+    cursorInfo {
+      after
+      before
+    }
+  }
+}

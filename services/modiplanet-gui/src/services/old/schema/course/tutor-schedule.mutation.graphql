@@ -1,0 +1,21 @@
+# createCourseTutorScheduleGroup 튜터 가능 스케줄 생성
+mutation createCourseTutorScheduleGroup($input: CreateCourseTutorScheduleGroupInput!) {
+  createCourseTutorScheduleGroup(input: $input) {
+    id
+  }
+}
+
+# updateCourseTutorSchedule 개별 스케줄 하나 업데이트
+mutation updateCourseTutorSchedule($input: UpdateCourseTutorScheduleInput!) {
+  updateCourseTutorSchedule(input: $input)
+}
+
+# deleteCourseTutorScheduleGroup 스케줄그룹내 모든 스케줄 삭제, 이후 모든 스케줄 삭제 사용
+mutation deleteCourseTutorScheduleGroup($input: DeleteCourseTutorScheduleGroupInput!) {
+  deleteCourseTutorScheduleGroup(input: $input)
+}
+
+# deleteCourseTutorSchedule  개별 스케줄 하나 삭제
+mutation deleteCourseTutorSchedule($input: DeleteCourseTutorScheduleInput!) {
+  deleteCourseTutorSchedule(input: $input)
+}

@@ -1,0 +1,4 @@
+# multiUploadFile
+mutation multiUploadFile($input: MultiUploadFileInput!) {
+  multiUploadFile(input: $input)
+}

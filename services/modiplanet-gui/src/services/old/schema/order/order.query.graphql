@@ -1,0 +1,249 @@
+# order 주문 상세 정보
+query order($where: OrderWhere!) {
+  order(where: $where) {
+    # 주문번호
+    id
+    # 구매일
+    createdAt
+    orderItems {
+      product {
+        # 상품 아이디
+        id
+        # 결제 내용 - 상품 이름
+        name
+        # 결제 내용 - 상품 가격
+        originPrice {
+          amount
+          currencyType
+        }
+        promotionPrice {
+          amount
+          currencyType
+        }
+        # 결제 내용 - 상품 수량
+        qty
+        # 클래스 정보, 개강일 정보
+        scheduleGroupId
+      }
+    }
+    # 취소/환불 정보
+    orderRefunds {
+      id # 주문 환불 ID
+      orderRefundNo # 주문 환불 No
+      orderId # 주문 코드
+      orderItems { # 주문 Item 리스트
+        id
+        orderItemNo
+        orderId
+        status
+        product {
+          id
+          name
+          image {
+            url
+          }
+          purchaseType
+          scheduleGroupId
+          originPrice {
+            amount
+            currencyType
+          }
+          promotionPrice {
+            amount
+            currencyType
+          }
+          qty
+        }
+        couponDiscount {
+          code
+          name
+          discountPrice {
+            amount
+            currencyType
+          }
+          discount {
+            type
+            value
+          }
+        }
+        createdAt
+      }
+      refundPrice { # 환불금
+        amount
+        currencyType
+      }
+      shippingPrice { # 배송비
+        amount
+        currencyType
+      }
+      customerChargeFee { # 고객 부담금 비용
+        amount
+        currencyType
+      }
+      payMethod # 환불수단
+      staffUserId # 환불 처리 담당자
+      reason # 환불 요청 이유
+      delivery { # 반품/회수 등등의 배송지 정보
+        id
+        address {
+          id
+          userInfo {
+            userId
+            name
+            email
+            phone
+          }
+          addr
+          addrDetail
+          zipcode
+        }
+        deliveryRequest
+        invoice
+        deliveryCarrierId
+        shippingPrice {
+          amount
+          currencyType
+        }
+        couponDiscount {
+          code
+          name
+          discountPrice {
+            amount
+            currencyType
+          }
+        }
+        createdAt
+        updatedAt
+        processedAt
+      }
+      couponDiscount { # 쿠폰 환불 정보
+        code
+        name
+        discountPrice {
+          amount
+          currencyType
+        }
+        discount {
+          type
+          value
+        }
+      }
+      status #상태
+      createdAt # 접수 일자
+      processedAt # 처리 일자
+    }
+    # 학습자 정보
+    profileInfo {
+      birth
+      email
+      codingTypes
+      name
+      phone
+    }
+    # 주문자 정보
+    userInfo {
+      name
+      email
+      phone
+    }
+    # 배송지 정보
+    delivery {
+      address {
+        zipcode
+        addr
+        addrDetail
+      }
+    }
+    # 결제 내용
+    couponDiscount {
+      name
+      discountPrice {
+        amount
+        currencyType
+      }
+    }
+    # 총 상품 금액
+    totalItemsPrice {
+     amount
+     currencyType
+    }
+    shippingPrice {
+      amount
+      currencyType
+    }
+    totalDiscountPrice {
+      amount
+      currencyType
+    }
+    totalPrice {
+      amount
+      currencyType
+    }
+    payments {
+      pgProvider
+      cardQuota
+    }
+  }
+}
+
+# orderConnection 주문내역 리스트
+query orderConnection($after: String, $first: Int, $offset: Int, $orderBy: OrderConnectionOrder, $where: OrderConnectionWhere) {
+  orderConnection(
+    after: $after
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    where: $where
+  ) {
+    nodes {
+      # 주문코드 - 상세보기에 이용
+      id
+      # 구매일
+      createdAt
+      # 상품명
+      orderItems {
+        product {
+          name
+          # 수강기간 - scheduleGroupId로 수강기간 가져와야 함
+          scheduleGroupId
+        }
+      }
+      # 학습자이름
+      profileInfo {
+        name
+      }
+      # 가격
+      totalPrice {
+        amount
+        currencyType
+      }
+      # 상태
+      status
+    }
+  }
+}
+
+# orderCards 결제 수단 카드 리스트
+query orderCards {
+  orderCards {
+    code
+    enabled
+    icon {
+      url
+    }
+    name
+  }
+}
+
+# orderLastAddresses 최근 배송지
+query orderLastAddress {
+  orderLastAddress {
+    addr
+    addrDetail
+    zipcode
+    userInfo {
+      name
+      phone
+    }
+  }
+}

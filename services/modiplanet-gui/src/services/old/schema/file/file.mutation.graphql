@@ -1,0 +1,4 @@
+# 파일 업로드
+mutation singleUploadFile($input: SingleUploadFileInput!) {
+  singleUploadFile(input: $input)
+}

@@ -1,0 +1,54 @@
+mutation StartStep($input: StartStepInput!) {
+  startStep(input: $input) {
+    stepId
+    stepName
+    stepType
+    status
+    progressRate
+    joinedTime
+    attemptCount
+    score
+    detail
+    startedAt
+    lastAccessedAt
+    completedAt
+  }
+}
+
+mutation UpdateCourseStep($input: UpdateCourseStepInput!) {
+  updateCourseStep(input: $input)
+}
+
+mutation UpdateStepProgress($input: UpdateStepProgressInput!) {
+  updateStepProgress(input: $input) {
+    stepId
+    stepName
+    stepType
+    status
+    progressRate
+    joinedTime
+    attemptCount
+    score
+    detail
+    startedAt
+    lastAccessedAt
+    completedAt
+  }
+}
+
+mutation CompleteStep($input: CompleteStepInput!) {
+  completeStep(input: $input) {
+    stepId
+    stepName
+    stepType
+    status
+    progressRate
+    joinedTime
+    attemptCount
+    score
+    detail
+    startedAt
+    lastAccessedAt
+    completedAt
+  }
+}

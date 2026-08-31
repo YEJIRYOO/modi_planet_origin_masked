@@ -1,0 +1,46 @@
+mutation loginUser($input: LoginUserInput!) {
+  loginUser(input: $input) {
+    accessToken
+    expiresIn
+    refreshToken
+    refreshExpiresIn
+  }
+}
+
+mutation logoutUser {
+  logoutUser
+}
+
+mutation loginSocialUser($input: LoginSocialUserInput!) {
+  loginSocialUser(input: $input) {
+    accessToken
+    expiresIn
+    refreshToken
+    refreshExpiresIn
+  }
+}
+
+mutation createUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    email
+  }
+}
+
+mutation createUserSocial($input: CreateUserSocialInput!) {
+  createUserSocial(input: $input) {
+    email
+  }
+}
+
+mutation reTokenUser($input: ReTokenUserInput!) {
+  reTokenUser(input: $input) {
+    accessToken
+    expiresIn
+    refreshToken
+    refreshExpiresIn
+  }
+}
+
+mutation deleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) 
+}

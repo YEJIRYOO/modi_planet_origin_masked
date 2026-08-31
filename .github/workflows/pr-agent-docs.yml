@@ -1,0 +1,217 @@
+name: PR Agent - Documentation Generator
+
+on:
+  # 자동: PR에 'docs' 라벨 추가 시 (PR scope)
+  pull_request:
+    types: [labeled]
+
+  # 수동: scope 선택하여 실행
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Documentation scope'
+        required: true
+        type: choice
+        options:
+          - pr
+          - folder
+          - project
+          - readme
+        default: pr
+      pr_number:
+        description: 'PR number (scope=pr only)'
+        required: false
+        type: number
+      folder_path:
+        description: 'Folder path (scope=folder only, e.g. "crates/server/src")'
+        required: false
+        type: string
+      branch:
+        description: 'Branch name (scope=folder,project)'
+        required: false
+        type: string
+        default: develop
+      notion_upload:
+        description: 'Upload to Notion'
+        required: false
+        type: boolean
+        default: true
+      notion_page_id:
+        description: 'Notion page ID override (optional)'
+        required: false
+        type: string
+      readme_path:
+        description: 'README output path (scope=readme, e.g. "services/auth/README.md")'
+        required: false
+        type: string
+        default: README.md
+      commit_readme:
+        description: 'Commit README to repo (scope=readme)'
+        required: false
+        type: boolean
+        default: true
+      max_files:
+        description: 'Max files to analyze (scope=folder,project,readme)'
+        required: false
+        type: number
+        default: 20
+
+jobs:
+  # ─── PR Documentation (label trigger or manual) ────────
+  docs-pr:
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name == 'pull_request' && github.event.label.name == 'docs') ||
+      (github.event_name == 'workflow_dispatch' && inputs.scope == 'pr')
+    steps:
+      - name: Set PR number
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "number=${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate PR Documentation
+        run: |
+          # Build notion options from secrets + inputs
+          NOTION_OPTS=""
+          if [ "${{ inputs.notion_upload || true }}" = "true" ]; then
+            NOTION_OPTS='"notionUpload": true'
+            if [ -n "${{ secrets.NOTION_API_KEY }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionApiKey\": \"${{ secrets.NOTION_API_KEY }}\""
+            fi
+            if [ -n "${{ inputs.notion_page_id }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ inputs.notion_page_id }}\""
+            elif [ -n "${{ secrets.NOTION_DOCS_PAGE_ID }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ secrets.NOTION_DOCS_PAGE_ID }}\""
+            fi
+            if [ -n "${{ secrets.NOTION_HISTORY_DB_ID }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionHistoryDbId\": \"${{ secrets.NOTION_HISTORY_DB_ID }}\""
+            fi
+          fi
+
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/docs/pr" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d "{
+              \"prNumber\": ${{ steps.pr.outputs.number }},
+              \"repoName\": \"${{ github.repository }}\",
+              \"options\": { $NOTION_OPTS }
+            }"
+
+  # ─── Folder Documentation (manual only) ────────────────
+  docs-folder:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.scope == 'folder'
+    steps:
+      - name: Generate Folder Documentation
+        run: |
+          NOTION_OPTS=""
+          if [ "${{ inputs.notion_upload }}" = "true" ]; then
+            NOTION_OPTS='"notionUpload": true'
+            if [ -n "${{ secrets.NOTION_API_KEY }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionApiKey\": \"${{ secrets.NOTION_API_KEY }}\""
+            fi
+            if [ -n "${{ inputs.notion_page_id }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ inputs.notion_page_id }}\""
+            elif [ -n "${{ secrets.NOTION_DOCS_PAGE_ID }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ secrets.NOTION_DOCS_PAGE_ID }}\""
+            fi
+          fi
+
+          if [ -n "$NOTION_OPTS" ]; then
+            OPTIONS_JSON="{ $NOTION_OPTS, \"maxFiles\": ${{ inputs.max_files }} }"
+          else
+            OPTIONS_JSON="{ \"maxFiles\": ${{ inputs.max_files }} }"
+          fi
+
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/docs/folder" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d "{
+              \"repoName\": \"${{ github.repository }}\",
+              \"folderPath\": \"${{ inputs.folder_path }}\",
+              \"branch\": \"${{ inputs.branch }}\",
+              \"options\": $OPTIONS_JSON
+            }"
+
+  # ─── Project Documentation (manual only) ───────────────
+  docs-project:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.scope == 'project'
+    steps:
+      - name: Generate Project Documentation
+        run: |
+          NOTION_OPTS=""
+          if [ "${{ inputs.notion_upload }}" = "true" ]; then
+            NOTION_OPTS='"notionUpload": true'
+            if [ -n "${{ secrets.NOTION_API_KEY }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionApiKey\": \"${{ secrets.NOTION_API_KEY }}\""
+            fi
+            if [ -n "${{ inputs.notion_page_id }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ inputs.notion_page_id }}\""
+            elif [ -n "${{ secrets.NOTION_DOCS_PAGE_ID }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ secrets.NOTION_DOCS_PAGE_ID }}\""
+            fi
+          fi
+
+          if [ -n "$NOTION_OPTS" ]; then
+            OPTIONS_JSON="{ $NOTION_OPTS, \"maxFiles\": ${{ inputs.max_files }} }"
+          else
+            OPTIONS_JSON="{ \"maxFiles\": ${{ inputs.max_files }} }"
+          fi
+
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/docs/project" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d "{
+              \"repoName\": \"${{ github.repository }}\",
+              \"branch\": \"${{ inputs.branch }}\",
+              \"options\": $OPTIONS_JSON
+            }"
+
+  # ─── README Generation (manual only) ──────────────────
+  docs-readme:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.scope == 'readme'
+    steps:
+      - name: Generate README.md
+        run: |
+          NOTION_OPTS=""
+          if [ "${{ inputs.notion_upload }}" = "true" ]; then
+            NOTION_OPTS='"notionUpload": true'
+            if [ -n "${{ secrets.NOTION_API_KEY }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionApiKey\": \"${{ secrets.NOTION_API_KEY }}\""
+            fi
+            if [ -n "${{ inputs.notion_page_id }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ inputs.notion_page_id }}\""
+            elif [ -n "${{ secrets.NOTION_DOCS_PAGE_ID }}" ]; then
+              NOTION_OPTS="$NOTION_OPTS, \"notionPageId\": \"${{ secrets.NOTION_DOCS_PAGE_ID }}\""
+            fi
+          fi
+
+          # Build options JSON: maxFiles always present, notion opts prepended if set
+          if [ -n "$NOTION_OPTS" ]; then
+            OPTIONS_JSON="{ $NOTION_OPTS, \"maxFiles\": ${{ inputs.max_files }} }"
+          else
+            OPTIONS_JSON="{ \"maxFiles\": ${{ inputs.max_files }} }"
+          fi
+
+          curl -sf -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/docs/readme" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d "{
+              \"repoName\": \"${{ github.repository }}\",
+              \"branch\": \"${{ inputs.branch }}\",
+              \"folderPath\": \"${{ inputs.folder_path }}\",
+              \"readmePath\": \"${{ inputs.readme_path }}\",
+              \"commit\": ${{ inputs.commit_readme }},
+              \"commitMessage\": \"docs: auto-generate ${{ inputs.readme_path }} [skip ci]\",
+              \"options\": $OPTIONS_JSON
+            }"

@@ -1,0 +1,17 @@
+subscription NotificationAdded {
+  notificationAdded {
+    id
+    userId
+    profileId
+    title
+    description
+    webLinkPath
+    iconUrl
+    state
+    uiType
+    type
+    deviceType
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,31 @@
+name-template: 'modiplanet-v$RESOLVED_VERSION 🌈'
+tag-template: 'modiplanet-v$RESOLVED_VERSION'
+tag-prefix: modiplanet-v # 릴리즈 노트 tag prefix(dekstop의 릴리즈 노트이므로 dekstop을 prefix로 함)
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bugfix'
+  - title: '🧰 Maintenance'
+    label: 'maintenance'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+include-labels: # PR의 라벨에 dekstop이 포함된 경우 릴리즈 노트에 포함
+  - "modiplanet"
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+  default: patch
+template: |
+  ## 변경사항
+  
+  $CHANGES

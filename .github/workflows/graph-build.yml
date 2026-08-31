@@ -1,0 +1,85 @@
+name: Build Code Graph
+
+on:
+  push:
+    branches: [main, develop, master]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build graph from (empty = repo default)'
+        required: false
+        type: string
+      mode:
+        description: 'Build mode'
+        required: false
+        type: choice
+        options:
+          - auto
+          - full
+          - incremental
+        default: auto
+
+jobs:
+  build-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Build code graph
+        run: |
+          # Resolve branch
+          BRANCH="${{ inputs.branch }}"
+          if [ -z "$BRANCH" ] && [ "${{ github.event_name }}" = "push" ]; then
+            BRANCH="${{ github.ref_name }}"
+          fi
+
+          # Resolve mode: push events → incremental (has before/after), manual → input or auto
+          MODE="${{ inputs.mode }}"
+          BEFORE_SHA=""
+          if [ "${{ github.event_name }}" = "push" ]; then
+            BEFORE_SHA="${{ github.event.before }}"
+            # If before is all zeros (first push), force full build
+            if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+              MODE="full"
+              BEFORE_SHA=""
+            elif [ -z "$MODE" ] || [ "$MODE" = "auto" ]; then
+              MODE="incremental"
+            fi
+          fi
+          if [ -z "$MODE" ] || [ "$MODE" = "auto" ]; then
+            MODE="full"
+          fi
+
+          # Build JSON payload
+          BRANCH_JSON=""
+          if [ -n "$BRANCH" ]; then
+            BRANCH_JSON="\"branch\": \"$BRANCH\","
+          fi
+          MODE_JSON="\"mode\": \"$MODE\""
+          BEFORE_JSON=""
+          if [ -n "$BEFORE_SHA" ] && [ "$MODE" = "incremental" ]; then
+            BEFORE_JSON=", \"beforeSha\": \"$BEFORE_SHA\""
+          fi
+
+          echo "Building code graph for ${{ github.repository }} (mode=$MODE, branch=$BRANCH)"
+          if [ "$MODE" = "incremental" ]; then
+            echo "  Comparing: $BEFORE_SHA..${{ github.sha }}"
+          fi
+
+          RESPONSE=$(curl -s --max-time 600 -w "\n%{http_code}" -X POST "${{ secrets.PR_AGENT_ENDPOINT }}/graph/build" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.PR_AGENT_API_KEY }}" \
+            -H "x-github-token: ${{ secrets.GH_TOKEN }}" \
+            -d "{
+              \"repoName\": \"${{ github.repository }}\",
+              ${BRANCH_JSON}
+              ${MODE_JSON}${BEFORE_JSON},
+              \"commit\": \"${{ github.sha }}\"
+            }")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          echo "$BODY" | jq . 2>/dev/null || echo "$BODY"
+          if [ "$HTTP_CODE" -ge 400 ] 2>/dev/null; then
+            echo "Error: HTTP $HTTP_CODE"
+            exit 1
+          fi

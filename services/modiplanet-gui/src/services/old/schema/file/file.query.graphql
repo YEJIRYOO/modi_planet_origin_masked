@@ -1,0 +1,5 @@
+query presignedUrlForVideoUpload($fileName: String!, $fileType: String!) {
+    presignedUrlForVideoUpload(fileName: $fileName, fileType: $fileType) {
+        url
+    }
+}

@@ -1,0 +1,49 @@
+query aiModelCategories($machineLearningTypes: [MachineLearningType!]!) {
+    aiModelCategories(where: {machineLearningTypes: $machineLearningTypes}) {
+        id
+        description
+        machineLearningType
+        imageUrl
+        name
+        type
+    }
+}
+
+query aiModelConnection($first: Int, $offset: Int) {
+    aiModelConnection(first: $first, offset: $offset) {
+        nodes {
+            id
+            name
+            aiModelCategory {
+                type
+                id
+                imageUrl
+            }
+        }
+    }
+}
+
+query aiModel($id: ID!) {
+    aiModel(where: {id: $id}) {
+        aiModelCategoryId
+        batchSize
+        classifiers {
+            label
+            ... on PlatClassifier {
+                __typename
+                dataset
+                label
+            }
+        }
+        epoch
+        id
+        learningRate
+        modelUrl
+        name
+        validationDataRate
+        aiModelCategory {
+            type
+            id
+        }
+    }
+}

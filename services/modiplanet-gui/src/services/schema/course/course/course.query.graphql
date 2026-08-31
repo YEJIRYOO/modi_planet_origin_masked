@@ -1,0 +1,210 @@
+query Course($where: CourseWhere!) {
+  course(where: $where) {
+    id
+    name
+    description
+    codeEditorType
+    difficulty
+    educationalPlan {
+      url
+      fileName
+    }
+    teachingMaterials {
+      url
+      fileName
+    }
+    lessonCount
+    lessons {
+      id
+      idx
+      name
+      description
+      state
+      steps {
+        step {
+          id
+          name
+          description
+          dType
+        }
+        idx
+      }
+    }
+  }
+}
+
+query MyCourseDashboard {
+  myCourseDashboard {
+    recentLearning {
+      course {
+        id
+        name
+        courseGroupId
+        courseGroupName
+        codeEditorType
+        difficulty
+        firstLearning {
+          courseGroupId
+          courseId
+          lessonId
+          stepId
+        }
+      }
+      progress {
+        status
+        displayProgress {
+          totalLessons
+          completedLessons
+        }
+        totalLessons
+        completedLessons
+        nextLearning {
+          courseGroupId
+          courseId
+          lessonId
+          lessonIdx
+          stepId
+        }
+      }
+      courseGroupId
+    }
+    learningStatus {
+      enrolledCourseCount
+      completedCourseCount
+      inProgressCourseCount
+      totalLearningTimeSeconds
+      learningTimeByType {
+        stepType
+        totalActiveSeconds
+        totalDurationSeconds
+        sessionCount
+      }
+    }
+  }
+}
+
+query CourseRecommends($kinds: [CourseRecommendKind!]!, $first: Int) {
+  courseRecommends(kinds: $kinds, first: $first) {
+    kind
+    courses {
+      id
+      name
+      description
+      courseGroupId
+      courseGroupName
+      codeEditorType
+      difficulty
+      lessonCount
+    }
+  }
+}
+
+query MyCourseConnection(
+  $first: Int
+  $offset: Int
+  $orderBy: CourseConnectionOrder
+  $where: MyCourseConnectionWhere
+) {
+  myCourseConnection(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    where: $where
+  ) {
+    nodes {
+      id
+      name
+      description
+      courseGroupId
+      courseGroupName
+      firstLearning {
+        courseGroupId
+        courseId
+        lessonId
+        stepId
+      }
+      nextLearning {
+        courseGroupId
+        courseId
+        courseName
+        totalLessonsInCourse
+        lessonId
+        lessonName
+        lessonIdx
+        stepId
+        stepName
+        stepIdx
+        totalStepsInLesson
+      }
+      codeEditorType
+      difficulty
+      lessonCount
+      lessons {
+        id
+      }
+      myProgress {
+        status
+        displayProgress {
+          totalLessons
+          completedLessons
+        }
+      }
+    }
+    totalCount
+  }
+}
+
+query MyCourseDetail($where: MyCourseDetailWhere!) {
+  myCourseDetail(where: $where) {
+    courseId
+    name
+    description
+    courseGroupName
+    difficulty
+    codeEditorType
+    educationalPlan {
+      url
+      fileName
+    }
+    teachingMaterials {
+      url
+      fileName
+    }
+    status
+    firstLearning {
+      lessonId
+      stepId
+    }
+    nextLearning {
+      lessonId
+      lessonIdx
+      stepId
+    }
+    displayProgress {
+      totalLessons
+      completedLessons
+    }
+    actualProgress {
+      totalLessons
+      completedLessons
+    }
+    completedAt
+    lessons {
+      lessonId
+      idx
+      lessonName
+      description
+      status
+      totalSteps
+      completedSteps
+      steps {
+        stepId
+        idx
+        stepName
+        stepType
+        status
+        progressRate
+      }
+    }
+  }
+}

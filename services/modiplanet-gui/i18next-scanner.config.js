@@ -1,0 +1,38 @@
+const path = require('path');
+
+const COMMON_EXTENSIONS = '/**/*.{js,jsx,ts,tsx,html}';
+
+module.exports = {
+  input: [
+    `./src${COMMON_EXTENSIONS}`,
+    `./components${COMMON_EXTENSIONS}`,
+    `./shared${COMMON_EXTENSIONS}`,
+  ],
+  options: {
+    defaultLng: 'ko-KR',
+    lngs: ['ko-KR', 'en-US', 'es', 'pl'],
+    func: {
+      list: ['i18next.t', 'i18n.t'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    },
+    resource: {
+      loadPath: path.join(__dirname, 'src/locales/{{lng}}/{{ns}}.json'),
+      savePath: path.join(__dirname, 'src/locales/{{lng}}/{{ns}}.json'),
+    },
+    defaultValue(lng, ns, key) {
+      const keyAsDefaultValue = ['ko-KR'];
+      if (keyAsDefaultValue.includes(lng)) {
+        const separator = '~~';
+        const value = key.includes(separator) ? key.split(separator)[1] : key;
+
+        return value;
+      }
+
+      return '';
+    },
+    keySeparator: false,
+    nsSeparator: false,
+    prefix: '%{',
+    suffix: '}',
+  },
+};

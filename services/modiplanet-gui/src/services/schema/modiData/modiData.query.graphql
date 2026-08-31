@@ -1,0 +1,24 @@
+query ModiData($input: ModiDataInput!) {
+  modiData(input: $input) {
+    id
+    name
+    moduleType
+    functionType
+    data
+    createdAt
+  }
+}
+
+query ModiDataConnection($input: ModiDataConnectionInput!) {
+  modiDataConnection(input: $input) {
+    nodes {
+      id
+      name
+      moduleType
+      functionType
+      data
+      createdAt
+    }
+    totalCount
+  }
+}

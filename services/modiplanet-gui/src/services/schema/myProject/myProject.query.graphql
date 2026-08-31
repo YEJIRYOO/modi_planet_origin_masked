@@ -1,0 +1,88 @@
+query Project($where: ProjectWhere!) {
+  project(where: $where) {
+    id
+    title
+    codeType
+    runType
+    jsonData
+    isFavorite
+    thumb {
+      domain
+      url
+      width
+      height
+      idx
+      key
+    }
+    infoMessage
+    infoCode
+    createdAt
+    updatedAt
+  }
+}
+
+query ProjectConnection(
+  $where: ProjectConnectionWhere!
+  $first: Int
+  $after: String
+  $offset: Int
+  $orderBy: ProjectConnectionOrder
+) {
+  projectConnection(
+    where: $where
+    first: $first
+    after: $after
+    offset: $offset
+    orderBy: $orderBy
+  ) {
+    totalCount
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasBeforePage
+    }
+    nodes {
+      id
+      title
+      codeType
+      runType
+      isFavorite
+      jsonData
+      thumb {
+        domain
+        url
+        width
+        height
+        idx
+        key
+      }
+      createdAt
+      updatedAt
+    }
+    edges {
+      cursor
+      node {
+        id
+        title
+        codeType
+        runType
+        jsonData
+        thumb {
+          domain
+          url
+          width
+          height
+          idx
+          key
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
+
+query projectNameExist($where: ProjectNameExistWhere!) {
+  projectNameExist(where: $where)
+}

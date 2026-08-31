@@ -1,0 +1,3 @@
+mutation createCourseParticipantLessonFeedback($input:CreateCourseParticipantLessonFeedbackInput!) {
+  createCourseParticipantLessonFeedback(input: $input) 
+}

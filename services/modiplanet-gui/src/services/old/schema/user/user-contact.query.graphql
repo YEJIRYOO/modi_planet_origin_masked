@@ -1,0 +1,47 @@
+# userContactConnection 1:1문의 리스트
+query userContactConnection($first: Int, $offset: Int, $orderBy: UserContactConnectionOrder, $where: UserContactConnectionWhere) {
+  userContactConnection(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    where: $where
+  ) {
+    totalCount
+    nodes {
+      id
+      name
+      description
+      createdAt
+      response
+      responseDate
+      orderId
+      status
+      type
+      files {
+        name
+        url
+      }
+    }
+  }
+}
+
+# userContact
+query userContact($where: UserContactWhere) {
+  userContact(where: $where) {
+    createdAt
+    description
+    id
+    name
+    orderId
+    response
+    type
+    updatedAt
+    owner {
+      name
+      email
+    }
+    responseOwner {
+      name
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# get user profiles
+query userProfileConnection ($first: Int, $offset: Int, $orderBy: UserProfileConnectionOrder, $where: UserProfileConnectionWhere) {
+  userProfileConnection(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    where: $where
+  ) {
+    nodes {
+      id
+      userId
+      name
+      birth
+      phone
+      role
+      codingTypes
+      avatar {
+        url
+      }
+    }
+  }
+}
+
+query userProfileToken ($where: UserProfileTokenWhere!) {
+  userProfileToken(where: $where) {
+    accessToken
+    expiresIn
+    refreshToken
+    refreshExpiresIn
+  }
+}

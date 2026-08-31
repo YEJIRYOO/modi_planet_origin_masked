@@ -1,0 +1,614 @@
+@import 'font.css';
+@import './typography.css';
+@import 'react-split-pane.css';
+@import './tiptap-content.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Base
+ */
+
+@layer base {
+  * {
+    outline: none;
+    font-family: 'Pretendard', 'Roboto', 'Noto Sans KR', -apple-system,
+      BlinkMacSystemFont, 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  body {
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  html {
+    @apply text-[16px] sm:text-[12px] tb:text-[12px] mb:text-[12px];
+  }
+
+  #root {
+    @apply min-h-screen h-full text-font-main leading-[1.2];
+  }
+
+  main * {
+    @apply break-words whitespace-pre-line;
+  }
+}
+
+/*
+ * Components
+ */
+@layer components {
+  /* NextUI Tooltip - data-[arrow], data-[placement] Tailwind JIT 미생성 보완 */
+  [data-arrow='true']::before {
+    display: block !important;
+  }
+  [data-placement='top']::before,
+  [data-placement='top-start']::before,
+  [data-placement='top-end']::before {
+    bottom: -3.5px;
+  }
+  [data-placement='top']::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  [data-placement='top-start']::before {
+    left: 0.75rem;
+    transform: rotate(45deg);
+  }
+  [data-placement='top-end']::before {
+    right: 0.75rem;
+    transform: rotate(45deg);
+  }
+  [data-placement='bottom']::before,
+  [data-placement='bottom-start']::before,
+  [data-placement='bottom-end']::before {
+    top: -3.5px;
+  }
+  [data-placement='bottom']::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  [data-placement='bottom-start']::before {
+    left: 0.75rem;
+    transform: rotate(45deg);
+  }
+  [data-placement='bottom-end']::before {
+    right: 0.75rem;
+    transform: rotate(45deg);
+  }
+  [data-placement='left']::before,
+  [data-placement='left-start']::before,
+  [data-placement='left-end']::before {
+    right: -3px;
+    transform: rotate(45deg);
+  }
+  [data-placement='left']::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  [data-placement='right']::before,
+  [data-placement='right-start']::before,
+  [data-placement='right-end']::before {
+    left: -3px;
+    transform: rotate(45deg);
+  }
+  [data-placement='right']::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  /* NextUI Checkbox - Fix stroke-dashoffset for check icon */
+  [data-selected='true'] polyline {
+    stroke-dashoffset: 44 !important;
+  }
+
+  /* input */
+  .input {
+    @apply w-full rounded-8 p-[14px_16px] bg-form-form text-15 focus-visible:outline-0 sm:text-13 sm:p-[9px_12px] sm:rounded-4;
+  }
+
+  .container {
+    @apply max-w-[1312px] m-0-auto px-[16px];
+  }
+
+  .full-screen-wrapper {
+    @apply w-screen max-h-screen h-screen min-h-screen relative overflow-hidden;
+  }
+
+  /* tab */
+  .tab {
+    @apply flex;
+  }
+
+  .tab-title {
+    @apply py-[4px] border-b-[2px] border-[transparent] cursor-pointer;
+  }
+
+  .tab-title.active {
+    @apply border-[#18f] font-[600];
+  }
+
+  /* table */
+  .table {
+    @apply border-[1px] text-center;
+  }
+
+  th,
+  td {
+    @apply border p-[15px];
+  }
+
+  /* error-msg */
+  .error-msg {
+    @apply text-brand text-13 font-regular;
+  }
+
+  /* pagination */
+  .pagination {
+    @apply flex items-center;
+  }
+
+  .pagination .item {
+    @apply flex justify-center items-center w-[39px] h-[39px] mx-[5px] text-font-main rounded-9 hover:bg-white cursor-pointer sm:w-[24px] sm:h-[24px] sm:rounded-4 sm:mx-0 sm:text-11;
+  }
+
+  .pagination .item.chev {
+    @apply hover:bg-transparent hover:text-brand;
+  }
+
+  .pagination .item.prev {
+    @apply mr-[10px];
+  }
+
+  .pagination .item.next {
+    @apply ml-[10px];
+  }
+
+  .pagination .active {
+    @apply text-white bg-brand hover:bg-brand hover:text-white;
+  }
+
+  .flatpickr {
+    @apply h-[46px] rounded-8 bg-form-form px-5;
+  }
+
+  /* react-select */
+  .select-wrapper .react-select__control {
+    @apply h-[46px] rounded-10 border-none px-3 text-15 font-regular text-font-sub_1 bg-form-form cursor-pointer sm:rounded-4 sm:p-0 sm:min-h-[33px] sm:h-[33px];
+  }
+
+  .select-wrapper .react-select__control:hover {
+    @apply border-form-border;
+  }
+
+  .select-wrapper .react-select__indicator-separator {
+    display: none;
+  }
+
+  .select-wrapper .react-select__menu {
+    @apply bg-white text-15 sm:text-14;
+  }
+
+  .select-wrapper .react-select__option {
+    @apply cursor-pointer;
+  }
+
+  .select-wrapper .react-select__option--is-focused {
+    @apply bg-brand_3;
+  }
+
+  .select-wrapper .react-select__option--is-selected {
+    @apply bg-brand_1;
+  }
+
+  .select-wrapper .css-1pahdxg-control {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .select-wrapper .css-1pahdxg-control:hover {
+    border-color: transparent !important;
+  }
+
+  /* header */
+  .nav-link-mobile {
+    @apply flex justify-between items-center p-[23px] rounded-10 active:bg-brand_3 active:text-brand;
+  }
+
+  /* 코딩하기 페이지 > 가이드카드 슬라이더 */
+  .guide-slider .slick-list {
+    @apply border-form-border rounded-t-30 border-t border-x overflow-hidden mb-[25px] sm:rounded-t-10 sm:mb-4;
+  }
+
+  .guide-slider .slick-slide {
+    @apply w-full;
+  }
+
+  .guide-slider .guide-dots {
+    display: flex !important;
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .guide-slider .guide-dots li {
+    @apply mx-[2px];
+  }
+
+  .guide-slider .guide-dots li button {
+    @apply rounded-full w-[6px] h-[6px] bg-brand_2 duration-75;
+  }
+
+  .guide-slider .guide-dots li.slick-active button {
+    @apply w-[22px] bg-brand;
+  }
+
+  /* HTML content */
+  .html-content ul {
+    @apply list-disc pl-6 my-1;
+  }
+
+  .html-content ol {
+    @apply list-decimal pl-6 my-1;
+  }
+}
+
+/*
+ * Utilities
+ */
+@layer utilities {
+  .w-240 {
+    width: 240px !important;
+  }
+
+  .border-l-0 {
+    border-left: 0px !important;
+  }
+
+  .border-r-0 {
+    border-right: 0px !important;
+  }
+
+  .break-keep {
+    word-break: keep-all;
+  }
+
+  .m-0-auto {
+    margin: 0 auto;
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .list-inside {
+    list-style: inside;
+  }
+
+  .text-shadow {
+    text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.7);
+  }
+
+  .ellipsis-1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ellipsis-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .ellipsis-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .ellipsis-4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  .autohide-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .autohide-scroll.is-scrolling {
+    scrollbar-color: rgba(172, 172, 172, 0.6) transparent;
+  }
+
+  .autohide-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .autohide-scroll::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 50px;
+  }
+
+  .autohide-scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .autohide-scroll.is-scrolling::-webkit-scrollbar-thumb {
+    background-color: rgba(172, 172, 172, 0.6);
+  }
+
+  .custom-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    @apply bg-brand rounded-full;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background-color: #efefef;
+    border-radius: 50px;
+  }
+
+  .custom-grey-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-grey-scroll::-webkit-scrollbar-thumb {
+    @apply bg-[#ACACAC] rounded-full;
+  }
+
+  .custom-grey-scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 50px;
+  }
+
+  .custom-brand-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-brand-scroll::-webkit-scrollbar-thumb {
+    @apply bg-brand rounded-[2px];
+  }
+
+  .custom-brand-scroll::-webkit-scrollbar-track {
+    background-color: #efefef;
+    border-radius: 50px;
+  }
+
+  .active-course-tab {
+    @apply bg-brand;
+  }
+
+  .animation-7s {
+    -webkit-animation-duration: 7s;
+    animation-duration: 7s;
+  }
+
+  .animation-10s {
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+  }
+
+  .animation-13s {
+    -webkit-animation-duration: 13s;
+    animation-duration: 13s;
+  }
+
+  .animation-20s {
+    -webkit-animation-duration: 20s;
+    animation-duration: 20s;
+  }
+
+  .animation-delay-2s {
+    -webkit-animation-delay: -2s;
+    animation-delay: -2s;
+  }
+
+  .animation-delay-3s {
+    -webkit-animation-delay: -3s;
+    animation-delay: -3s;
+  }
+
+  .animation-delay-4s {
+    -webkit-animation-delay: -4s;
+    animation-delay: -4s;
+  }
+
+  .animation-delay-5s {
+    -webkit-animation-delay: -5s;
+    animation-delay: -5s;
+  }
+
+  .slick-slide.slick-active {
+    height: 100%;
+  }
+
+  .slick-slide .img-wrapper {
+  }
+
+  .slick-slide.slick-active.slick-center {
+    position: relative;
+    z-index: 100;
+    transform: scale(1.2);
+  }
+
+  .slick-slider .slick-arrow {
+    display: none;
+  }
+
+  .truncate-wrapper {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .truncate {
+    display: table-cell;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes blink-border {
+    0% {
+      @apply bg-transparent;
+    }
+    100% {
+      @apply bg-sub2_green;
+    }
+  }
+
+  @keyframes bounce-custom {
+    0%,
+    100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  @keyframes live-controller-btn {
+    0% {
+      background-color: #1e232f;
+    }
+
+    25% {
+      transform: scale(2);
+    }
+
+    50% {
+      transform: scale(1.7);
+    }
+
+    75% {
+      transform: scale(2.1);
+    }
+
+    100% {
+      transform: none;
+    }
+  }
+
+  .progress-bar {
+    height: 2px;
+    overflow: hidden;
+    position: relative;
+    transform: translateX(0);
+  }
+
+  .progress-bar__bar {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(-100%);
+  }
+
+  .progress-bar__bar.active_8s {
+    transition: all 8000ms linear;
+    transform: translateX(0);
+  }
+
+  /*.progress-bar__bar.active_8s {*/
+  /*  transition: all 8000ms linear;*/
+  /*  transform: translateX(0%);*/
+  /*}*/
+
+  @keyframes loopToRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes loopToLeft {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .infinity-loop-right {
+    animation: 50s linear 0s infinite normal none running loopToRight;
+  }
+
+  .infinity-loop-left {
+    animation: 50s linear 0s infinite normal none running loopToLeft;
+  }
+
+  @keyframes toast-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toast-exit {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+/*input 자동완성으로 채워지는 색 오버라이딩*/
+/*input:-webkit-autofill {*/
+/*  -webkit-box-shadow: 0 0 0 1000px white inset;*/
+/*  box-shadow: 0 0 0 1000px white inset;*/
+/*}*/
+
+/*input 자동완성으로 채워지는 색 오버라이딩*/
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #333;
+}

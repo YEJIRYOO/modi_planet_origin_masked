@@ -1,0 +1,67 @@
+query challengeQuizConnection($first: Int, $offset: Int, $orderBy: QuizConnectionOrder, $where: QuizConnectionWhere) {
+    quizConnection(first: $first, offset: $offset, orderBy: $orderBy, where: $where) {
+        nodes {
+            id
+            title
+        }
+        totalCount
+    }
+}
+
+query challengeQuiz($where: QuizWhere!) {
+    quiz(where: $where) {
+        id
+        questions {
+            difficulty
+            hint
+            id
+            idx
+            subText
+            text
+            choices {
+                id
+                text
+            }
+        }
+        title
+    }
+}
+
+query randomQuizQuestion($where: RandomQuizQuestion!) {
+    randomQuizQuestion(where: $where) {
+        choices {
+            id
+            text
+        }
+        difficulty
+        hint
+        id
+        target
+        subText
+        text
+        type
+    }
+}
+
+query quizResult($where: QuizResultWhere!) {
+    quizResult(where: $where) {
+        correctQuestionNum
+        totalQuestionNum
+        questionResults {
+            choiceIds
+            pass
+            question {
+                choices {
+                    id
+                    isCorrect
+                    text
+                }
+                commentary
+                hint
+                text
+                subText
+                id
+            }
+        }
+    }
+}

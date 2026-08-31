@@ -1,0 +1,3 @@
+mutation addDataAnalyzer($input: [AddDataAnalyzerInput!]!) {
+    addDataAnalyzer(input: $input)
+}

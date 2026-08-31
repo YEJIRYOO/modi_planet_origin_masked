@@ -1,0 +1,52 @@
+# requestOrderCode 주문코드 발급
+mutation requestOrderCode {
+  requestOrderCode
+}
+
+# createOrder 결제버튼 클릭 후 주문등록시 사용
+mutation createOrder($input: CreateOrderInput!) {
+  createOrder(input: $input) {
+    id
+    status
+    delivery {
+      address {
+        addr
+        id
+        addrDetail
+        zipcode
+      }
+      id
+      shippingPrice {
+        amount
+        currencyType
+      }
+      updatedAt
+    }
+    payments {
+      paymentPrice {
+        amount
+        currencyType
+      }
+      payMethod
+      impCode
+      pgProvider
+    }
+    totalPrice {
+      amount
+      currencyType
+    }
+    userInfo {
+      email
+      name
+      phone
+      userId
+    }
+  }
+}
+
+# completeOrderPayment 결제 완료 후 주문 검증하는 api
+mutation completeOrderPayment($input: CompleteOrderPaymentInput!) {
+  completeOrderPayment(input: $input) {
+    id
+  }
+}

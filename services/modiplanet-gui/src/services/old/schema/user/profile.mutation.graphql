@@ -1,0 +1,48 @@
+# add profile
+mutation addUserProfile($input: AddUserProfileInput!) {
+  addUserProfile(input: $input) {
+    profiles {
+      id
+      name
+      birth
+      phone
+      userId
+      codingTypes
+      avatar {
+        domain
+        url
+        width
+        height
+        idx
+        key
+      }
+    }
+  }
+}
+
+# update profile
+mutation updateUserProfile($input: UpdateUserProfileInput!) {
+  updateUserProfile(input: $input) {
+    profiles {
+      id
+      name
+      birth
+      phone
+      codingTypes
+      avatar {
+        domain
+      }
+    }
+  }
+}
+
+# 핀 리셋 / 핀번호 잃어 버렸을 때 사용
+mutation resetUserPinCode($input: ResetUserPinCodeInput!) {
+  resetUserPinCode(input: $input)
+}
+
+
+# 이거 써야함 ..
+mutation updateUserPinCode($input: UpdateUserPinCodeInput!) {
+  updateUserPinCode(input: $input)
+}

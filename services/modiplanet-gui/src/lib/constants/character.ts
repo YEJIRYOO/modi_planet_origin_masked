@@ -1,0 +1,80 @@
+export const Character = [
+  {
+    Name: '네트',
+    Nickname: 'Nett',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/nett.jpg',
+    Mbti: 'MbtiTypeINTJ',
+  },
+  {
+    Name: '베리',
+    Nickname: 'Berry',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/berry.jpg',
+    Mbti: 'MbtiTypeISFJ',
+  },
+  {
+    Name: '엘리',
+    Nickname: 'Elli',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/elli.jpg',
+    Mbti: 'MbtiTypeENFP',
+  },
+  {
+    Name: '스피키',
+    Nickname: 'Speaky',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/speaky.jpg',
+    Mbti: 'MbtiTypeESFP',
+  },
+  {
+    Name: '디디',
+    Nickname: 'Didi',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/didi.jpg',
+    Mbti: 'MbtiTypeINTP',
+  },
+  {
+    Name: '모토',
+    Nickname: 'Moto',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/moto.jpg',
+    Mbti: 'MbtiTypeESFJ',
+  },
+  {
+    Name: '모티',
+    Nickname: 'Moti',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/moti.jpg',
+    Mbti: 'MbtiTypeESTJ',
+  },
+  {
+    Name: '조이',
+    Nickname: 'Joy',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/joy.jpg',
+    Mbti: 'MbtiTypeENTJ',
+  },
+  {
+    Name: '다이얼',
+    Nickname: 'Diall',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/diall.jpg',
+    Mbti: 'MbtiTypeENFJ',
+  },
+  {
+    Name: '버트',
+    Nickname: 'Burt',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/burt.jpg',
+    Mbti: 'MbtiTypeISFP',
+  },
+  {
+    Name: '토프',
+    Nickname: 'Tof',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/tof.jpg',
+    Mbti: 'MbtiTypeINFJ',
+  },
+  {
+    Name: '엔버',
+    Nickname: 'Envor',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/envor.jpg',
+    Mbti: 'MbtiTypeINFP',
+  },
+  {
+    Name: '아이뮤',
+    Nickname: 'Imew',
+    ThumbnailUrl: 'https://d2isodt8obvphf.cloudfront.net/MODI/imew.jpg',
+    Mbti: 'MbtiTypeESTP',
+  },
+];

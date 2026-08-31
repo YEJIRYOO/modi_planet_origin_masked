@@ -1,0 +1,18 @@
+/** 유저 */
+export const ERROR_USER_INCORRECT_AUTHORIZATION = 10010;
+export const ERROR_USER_AUTHORIZATION_FAILED = 10000;
+export const ERROR_USER_AUTHORIZATION_FAILED2 = 60008;
+export const ERROR_USER_INVALID_REFRESH_TOKEN = 40018;
+export const ERROR_USER_SIGN_UP_NEEDED = 40019;
+export const ERROR_USER_DELETED_USER = 40020;
+export const ERROR_USER_INVALID_PIN = 40002;
+
+/** 쿠폰 */
+export const ERROR_COUPON_INVALID_CODE = 70001;
+export const ERROR_COUPON_DUPLICATE = 70002;
+
+/** 에러코드 */
+export const ERROR_500 = 500;
+export const ERROR_400 = 400;
+export const ERROR_403 = 403;
+export const ERROR_404 = 404;

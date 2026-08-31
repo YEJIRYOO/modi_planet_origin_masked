@@ -1,0 +1,9 @@
+overwrite: true
+schema: 'https://apiv1.modiplanet.com/graphql'
+documents: 'src/services/schema/**/*.graphql'
+generates:
+  src/services/gen/gen_prod.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

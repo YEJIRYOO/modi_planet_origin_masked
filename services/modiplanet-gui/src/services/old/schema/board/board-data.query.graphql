@@ -1,0 +1,45 @@
+query boardDataConnection($first: Int!, $after: String, $offset: Int, $orderBy: BoardDataConnectionOrder, $where: BoardDataConnectionWhere, $langType: LangType) {
+  boardDataConnection(
+    first: $first
+    after: $after
+    langType: $langType
+    offset: $offset
+    orderBy: $orderBy
+    where: $where
+  ) {
+    nodes {
+      content
+      createdAt
+      id
+      isNew
+      isView
+      title
+      files {
+        id
+        url
+        name
+      }
+    }
+    totalCount
+  }
+}
+
+
+query boardData($where: BoardDataWhere!) {
+  boardData(where: $where) {
+    content
+    createdAt
+    id
+    title
+    viewCount
+    files {
+      id
+      url
+      name
+    }
+    cursorInfo {
+      after
+      before
+    }
+  }
+}

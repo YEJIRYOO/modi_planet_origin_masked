@@ -1,0 +1,51 @@
+mutation CreateProject($input: CreateProjectInput!) {
+  createProject(input: $input) {
+    id
+    title
+    runType
+    jsonData
+    thumb {
+      domain
+      url
+      width
+      height
+      idx
+      key
+    }
+    createdAt
+    updatedAt
+    infoCode
+    infoMessage
+  }
+}
+
+mutation UpdateProject($input: UpdateProjectInput!) {
+  updateProject(input: $input) {
+    id
+    title
+    runType
+    jsonData
+    thumb {
+      domain
+      url
+      width
+      height
+      idx
+      key
+    }
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteProject($input: DeleteProjectInput!) {
+  deleteProject(input: $input)
+}
+
+mutation AddProjectFavorite($input: AddProjectFavoriteInput!) {
+  addProjectFavorite(input: $input)
+}
+
+mutation RemoveProjectFavorite($input: RemoveProjectFavoriteInput!) {
+  removeProjectFavorite(input: $input)
+}

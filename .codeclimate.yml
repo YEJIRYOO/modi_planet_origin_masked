@@ -1,0 +1,64 @@
+checks:
+  argument-count:
+    enabled: true
+    config:
+      threshold: 5 # default 4
+  complex-logic:
+    enabled: true
+    config:
+      threshold: 8 # default 4
+  file-lines:
+    enabled: true
+    config:
+      threshold: 500 # default 250
+  method-complexity:
+    enabled: true
+    config:
+      threshold: 8 # default 5
+  method-count:
+    enabled: true
+    config:
+      threshold: 25 # default 20
+  method-lines:
+    enabled: true
+    config:
+      threshold: 50 # default 25
+  nested-control-flow:
+    enabled: true
+    config:
+      threshold: 4 # default 4
+  return-statements:
+    enabled: true
+    config:
+      threshold: 5 # default 4
+  similar-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+  identical-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+plugins:
+  eslint:
+    enabled: true
+    channel: 'eslint-7'
+exclude_patterns:
+  - '**/*.d.ts'
+  - '**/*.js'
+  - '**/*_test.go'
+  - '**/node_modules/'
+  - '**/spec/'
+  - '**/test/'
+  - '**/tests/'
+  - '**/vendor/'
+  - 'Tests/'
+  - 'config/'
+  - 'db/'
+  - 'dist/'
+  - 'features/'
+  - 'script/'
+  - 'tests/'
+  - 'packages/scratch-blocks/**'
+  - '**/*.graphql'
+  - '**/graphql.ts'

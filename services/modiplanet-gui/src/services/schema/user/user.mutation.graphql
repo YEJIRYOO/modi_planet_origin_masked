@@ -1,0 +1,159 @@
+mutation SignIn($input: SignInInput!) {
+  signIn(input: $input) {
+    id
+  }
+}
+
+mutation SignOut {
+  signOut {
+    success
+  }
+}
+
+mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    id
+  }
+}
+
+mutation SessionOnetimeCode($input: SessionOnetimeCodeInput) {
+  sessionOnetimeCode(input: $input) {
+    code
+  }
+}
+
+mutation TokenExchange($input: TokenExchangeInput!) {
+  tokenExchange(input: $input) {
+    accessToken
+    refreshToken
+    expiresIn
+    refreshExpiresIn
+  }
+}
+
+mutation RefreshToken($input: RefreshTokenInput!) {
+  refreshToken(input: $input) {
+    accessToken
+    refreshToken
+    expiresIn
+    refreshExpiresIn
+  }
+}
+
+mutation SendEmailVerificationCode($input: SendEmailVerificationCodeInput!) {
+  sendEmailVerificationCode(input: $input) {
+    success
+  }
+}
+
+mutation VerifyEmailVerificationCode(
+  $input: VerifyEmailVerificationCodeInput!
+) {
+  verifyEmailVerificationCode(input: $input) {
+    success
+  }
+}
+
+mutation Unregister($input: UnregisterInput!) {
+  unregister(input: $input) {
+    success
+  }
+}
+
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    uuid
+    email
+    signUpType
+    privacyPolicyConsent
+    termsOfServiceConsent
+    personalInfoConsent
+    emailMarketingConsent
+    smsMarketingConsent
+    marketingConsentEmailUpdatedAt
+    marketingConsentSmsUpdatedAt
+    roleType
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    id
+    userId
+    birthdate
+    name
+    nickname
+    phoneNumber
+    countryCallingCode
+    thumbnailUrl
+    codingExperienceTypeList
+    contactEmail
+  }
+}
+
+mutation SocialSignIn($input: SocialSignInInput!) {
+  socialSignIn(input: $input) {
+    success
+    user {
+      id
+      signUpType
+    }
+    userInfo {
+      name
+      userId
+      email
+    }
+  }
+}
+
+mutation SocialSignUp($input: SocialSignUpInput!) {
+  socialSignUp(input: $input) {
+    id
+    email
+  }
+}
+
+mutation ResetPassword($input: ResetPasswordInput!) {
+  resetPassword(input: $input) {
+    success
+  }
+}
+
+mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    success
+  }
+}
+
+mutation ConfirmProtectorEmailChange(
+  $input: ConfirmProtectorEmailChangeInput!
+) {
+  confirmProtectorEmailChange(input: $input) {
+    name
+    email
+    countryCallingCode
+    phoneNumber
+    verified
+  }
+}
+
+mutation ConfirmContactEmailChange($input: ConfirmContactEmailChangeInput!) {
+  confirmContactEmailChange(input: $input) {
+    id
+    userId
+    birthdate
+    name
+    nickname
+    phoneNumber
+    countryCallingCode
+    thumbnailUrl
+    codingExperienceTypeList
+    city
+    region
+    contactEmail
+    contactEmailVerified
+  }
+}

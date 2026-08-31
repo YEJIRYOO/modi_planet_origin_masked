@@ -1,0 +1,48 @@
+query CourseGroupConnection(
+  $first: Int
+  $after: String
+  $offset: Int
+  $where: CourseGroupConnectionWhere
+) {
+  courseGroupConnection(
+    first: $first
+    after: $after
+    offset: $offset
+    where: $where
+  ) {
+    nodes {
+      id
+      name
+      description
+      courses {
+        course {
+          id
+          name
+          description
+          codeEditorType
+          difficulty
+          lessonCount
+          lessons {
+            id
+          }
+        }
+        effectiveStatus
+      }
+    }
+    filterCourse {
+      codingTypes {
+        value
+        count
+      }
+      difficulties {
+        value
+        count
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+  }
+}

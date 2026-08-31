@@ -1,0 +1,31 @@
+# get user
+query user($where: UserWhere!) {
+  user(where: $where) {
+    id
+    email
+    name
+    phone
+    # userId
+    profiles {
+      birth
+    }
+  }
+}
+
+# 프로필 , 핀코드 유무
+query profileConnection {
+  user {
+    profiles {
+      avatar {
+        url
+      }
+      id
+      birth
+      userId
+      role
+      name
+      phone
+    }
+    isPinCode
+  }
+}

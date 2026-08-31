@@ -1,0 +1,17 @@
+mutation saveAIModel($input: SaveAIModelInput!) {
+    saveAIModel(input: $input) {
+        id
+    }
+}
+
+mutation deleteAIModel($id: ID!) {
+    deleteAIModel(input: {id: $id}) {
+        success
+    }
+}
+
+mutation updateAIModel($input: UpdateAIModelInput!) {
+    updateAIModel(input: $input)  {
+        id
+    }
+}

@@ -1,0 +1,86 @@
+# mutation SignIn($input: SignInInput!) {
+#   signIn(input: $input) {
+#     id
+#     uuid
+#     email
+#     signUpType
+#     privacyPolicyConsent
+#     termsOfServiceConsent
+#     personalInfoConsent
+#     emailMarketingConsent
+#     smsMarketingConsent
+#     countryCode
+#     roleType
+#     createdAt
+#     updatedAt
+#   }
+# }
+
+# mutation SignUp($input: SignUpInput!) {
+#   signUp(input: $input) {
+#     id
+#     uuid
+#     email
+#     signUpType
+#     privacyPolicyConsent
+#     termsOfServiceConsent
+#     personalInfoConsent
+#     emailMarketingConsent
+#     smsMarketingConsent
+#     countryCode
+#     roleType
+#     createdAt
+#     updatedAt
+#   }
+# }
+
+# mutation SignOut {
+#   signOut {
+#     success
+#   }
+# }
+
+# mutation SendEmailVerificationCode($input: SendEmailVerificationCodeInput!) {
+#   sendEmailVerificationCode(input: $input) {
+#     success
+#   }
+# }
+
+# mutation VerifyEmailVerificationCode(
+#   $input: VerifyEmailVerificationCodeInput!
+# ) {
+#   verifyEmailVerificationCode(input: $input) {
+#     success
+#   }
+# }
+
+# mutation Unregister($input: UnregisterInput!) {
+#   unregister(input: $input) {
+#     success
+#   }
+# }
+
+# mutation ChangePassword($input: ChangePasswordInput!) {
+#   changePassword(input: $input) {
+#     success
+#   }
+# }
+
+# mutation ResetPassword($input: ResetPasswordInput!) {
+#   resetPassword(input: $input) {
+#     success
+#   }
+# }
+
+# mutation UpdateProfile($input: UpdateProfileInput!) {
+#   updateProfile(input: $input) {
+#     id
+#     userId
+#     birthdate
+#     name
+#     nickname
+#     phoneNumber
+#     thumbnailUrl
+#     codingExperienceTypeList
+#   }
+# }

@@ -1,0 +1,98 @@
+name: modiplanet-gui CI & CD
+
+on:
+  push:
+    tags:
+      - 'develop-v*'
+      - 'release-v*'
+
+defaults:
+  run:
+    working-directory: services/modiplanet-gui
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # virtual host machine setting
+    steps:
+      - uses: actions/checkout@v2 # checkout source copy
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.USER_CHECKOUT_TOKEN }}
+          submodules: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Generate Environment Variables File for Build
+        run: |
+          echo "REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY" >> .env
+          echo "REACT_APP_KAKAO_API_KEY_PROD=$REACT_APP_KAKAO_API_KEY_PROD" >> .env
+          echo "REACT_APP_KAKAO_SIGNIN_DEV_REDIRECT_URI=$REACT_APP_KAKAO_SIGNIN_DEV_REDIRECT_URI" >> .env
+          echo "REACT_APP_KAKAO_SIGNIN_TEST_REDIRECT_URI=$REACT_APP_KAKAO_SIGNIN_TEST_REDIRECT_URI" >> .env
+          echo "REACT_APP_KAKAO_SIGNIN_PROD_REDIRECT_URI=$REACT_APP_KAKAO_SIGNIN_PROD_REDIRECT_URI" >> .env
+        env:
+          REACT_APP_KAKAO_API_KEY: ${{ secrets.REACT_APP_KAKAO_API_KEY}}
+          REACT_APP_KAKAO_API_KEY_PROD: ${{ secrets.REACT_APP_KAKAO_API_KEY_PROD}}
+          REACT_APP_KAKAO_SIGNIN_DEV_REDIRECT_URI: ${{ secrets.REACT_APP_KAKAO_SIGNIN_DEV_REDIRECT_URI}}
+          REACT_APP_KAKAO_SIGNIN_TEST_REDIRECT_URI: ${{ secrets.REACT_APP_KAKAO_SIGNIN_TEST_REDIRECT_URI}}
+          REACT_APP_KAKAO_SIGNIN_PROD_REDIRECT_URI: ${{ secrets.REACT_APP_KAKAO_SIGNIN_PROD_REDIRECT_URI}}
+
+      - name: Configure Sentry Release
+        run: |
+          echo "GENERATE_SOURCEMAP=true" >> "$GITHUB_ENV"
+          echo "REACT_APP_SENTRY_RELEASE=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+          echo "SENTRY_RELEASE=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+
+      # Run rush install
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build Development
+        if: contains(github.ref, 'develop-v')
+        run: CI=false yarn build
+
+      - name: Build Production
+        if: contains(github.ref, 'release-v')
+        run: CI=false yarn build:prod
+
+      - name: Install Sentry CLI
+        run: npm install -g @sentry/cli
+
+      - name: Upload Sentry Source Maps
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: sentry
+          SENTRY_PROJECT: modiplanet-client
+          SENTRY_URL: https://sentry.luxrobo.net
+        run: |
+          sentry-cli releases info "$SENTRY_RELEASE" >/dev/null 2>&1 || sentry-cli releases new "$SENTRY_RELEASE"
+          sentry-cli sourcemaps inject build/assets
+          sentry-cli sourcemaps upload build/assets --release "$SENTRY_RELEASE"
+          sentry-cli releases finalize "$SENTRY_RELEASE"
+          find build/assets -name "*.map" -type f -delete
+
+      - uses: chrislennon/mask
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+
+      - name: Deploy Development
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        if: contains(github.ref, 'develop-v')
+        run: |
+          aws s3 sync build s3://${{ secrets.AWS_S3_DEV_MODIPLANET_URL }} --region ap-northeast-2 --acl public-read
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DEV_MODIPLANET_DIST }} --paths "/*"
+
+      - name: Deploy Production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        if: contains(github.ref, 'release-v')
+        run: |
+          aws s3 sync build s3://${{ secrets.AWS_S3_PROD_MODIPLANET_URL }} --region ap-northeast-2 --acl public-read
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_PROD_MODIPLANET_DIST }} --paths "/*"

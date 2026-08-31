@@ -1,0 +1,157 @@
+query Contact($input: ContactInput!) {
+  contact(input: $input) {
+    id
+    userId
+    userName
+    subject
+    title
+    content
+    fileList {
+      name
+      url
+    }
+    createdAt
+    updatedAt
+    state
+    responseMessage
+    respondedAt
+  }
+}
+
+query ContactConnection($input: ContactConnectionInput!) {
+  contactConnection(input: $input) {
+    nodes {
+      id
+      userId
+      userName
+      subject
+      title
+      content
+      fileList {
+        name
+        url
+      }
+      createdAt
+      updatedAt
+      state
+      responseMessage
+      respondedAt
+    }
+    totalCount
+  }
+}
+
+query NoticeConnection($input: NoticeConnectionInput!) {
+  noticeConnection(input: $input) {
+    nodes {
+      id
+      isTop
+      viewCount
+      language
+      title
+      content
+      isNew
+      createdAt
+    }
+    totalCount
+  }
+}
+
+query Notice($input: NoticeInput!) {
+  notice(input: $input) {
+    id
+    isTop
+    viewCount
+    language
+    title
+    content
+    attachments {
+      id
+      name
+      url
+    }
+    isNew
+    createdAt
+    isExposed
+    cursorInfo {
+      before
+      after
+    }
+  }
+}
+
+query Faq($input: FaqInput!) {
+  faq(input: $input) {
+    id
+    category
+    subCategory
+    viewCount
+    language
+    title
+    content
+    createdAt
+  }
+}
+
+query FaqConnection($input: FaqConnectionInput!) {
+  faqConnection(input: $input) {
+    nodes {
+      id
+      category
+      subCategory
+      viewCount
+      language
+      title
+      content
+      createdAt
+    }
+    totalCount
+  }
+}
+
+query NotificationConnection($input: NotificationConnectionInput!) {
+  notificationConnection(input: $input) {
+    nodes {
+      id
+      userId
+      profileId
+      title
+      description
+      webLinkPath
+      iconUrl
+      state
+      uiType
+      type
+      createdAt
+      updatedAt
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        id
+        userId
+        profileId
+        title
+        description
+        webLinkPath
+        iconUrl
+        state
+        uiType
+        type
+        createdAt
+        updatedAt
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasBeforePage
+    }
+  }
+}
+
+query NotificationUnreadCount($deviceTypes: [DeviceType!]) {
+  notificationUnreadCount(deviceTypes: $deviceTypes)
+}

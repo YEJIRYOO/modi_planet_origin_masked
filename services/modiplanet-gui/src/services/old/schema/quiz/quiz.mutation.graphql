@@ -1,0 +1,37 @@
+mutation startQuiz($input: StartQuizInput!) {
+    startQuiz(input: $input) {
+        quizTakingId
+    }
+}
+
+mutation submitQuestionReport($input: SubmitQuestionReportInput!) {
+    submitQuestionReport(input: $input) {
+        success
+    }
+}
+
+# 퀴즈 단위 정답 제출
+mutation submitQuizAnswer($input: SubmitQuizAnswerInput!) {
+    submitQuizAnswer(input: $input) {
+        quizTakingId
+    }
+}
+
+# 문제 단위 정답 제출
+mutation submitQuestionAnswer($input: QuestionAnswer!) {
+    submitQuestionAnswer(input: $input) {
+        choiceIds
+        pass
+        question {
+            hint
+            choices {
+                isCorrect
+                text
+                id
+            }
+            commentary
+            subText
+            text
+        }
+    }
+}

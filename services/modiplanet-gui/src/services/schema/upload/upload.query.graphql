@@ -1,0 +1,12 @@
+query PresignedMultiUrlsForFileUpload($input: PresignedMultiUrlsForFileUploadInput!) {
+    presignedMultiUrlsForFileUpload(input: $input) {
+        urls
+    }
+}
+
+query PresignedUrlForFileUpload($fileName: String!, $fileType: String!) {
+    presignedUrlForFileUpload(fileName: $fileName, fileType: $fileType) {
+        url
+    }
+}
+

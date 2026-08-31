@@ -1,0 +1,7 @@
+query userAuthIdentity($where: UserAuthIdentityWhere!) {
+  userAuthIdentity(where: $where) {
+    name
+    birth
+    phone
+  }
+}

@@ -1,0 +1,20 @@
+# get faq connection
+query boardFaqConnection($first: Int!, $offset: Int, $langType: LangType, $where: BoardFaqConnectionWhere) {
+  boardFaqConnection(first: $first, offset: $offset, langType: $langType, where: $where) {
+    nodes {
+      id
+      title
+      content
+      isView
+      createdAt
+      faqCodeName
+    }
+    totalCount
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasBeforePage
+    }
+  }
+}

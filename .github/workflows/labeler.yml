@@ -1,0 +1,14 @@
+name: "Pull Request Labeler"
+on:
+  - pull_request_target # 1. 액션이 작동되는 이벤트 조건
+
+jobs:
+  triage:
+    permissions:        # 2. workflows의 권한(접근 범위) 지정
+      contents: read       # 2.1 내용을 읽을 수 있음
+      pull-requests: write # 2.2 PR을 작성할 수 있음
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v4 # 3. labeler를 사용
+        with:
+          repo-token: ${{ secrets.USER_CHECKOUT_TOKEN }}

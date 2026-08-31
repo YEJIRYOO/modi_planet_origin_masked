@@ -1,0 +1,135 @@
+@tailwind components;
+
+@layer components {
+  /* typography */
+
+  /* Pretendard JP / 3.125rem */
+  .h1-m {
+    @apply text-50 font-medium;
+  }
+
+  .h1-b {
+    @apply text-50 font-bold;
+  }
+
+  /* Pretendard JP / 2.5rem */
+  .h2-b {
+    @apply text-40 font-bold;
+  }
+
+  /* Pretendard JP / 2.125rem */
+  .h3-b {
+    @apply text-34 font-bold;
+  }
+
+  .h3-sb {
+    @apply text-34 font-semibold;
+  }
+
+  /* Pretendard JP / 1.875rem */
+  .h4-b {
+    @apply text-30 font-bold;
+  }
+  .h4-m {
+    @apply text-30 font-medium;
+  }
+
+  /* Pretendard JP / 1.625rem */
+  .h5-b {
+    @apply text-26 font-bold;
+  }
+  .h5-m {
+    @apply text-26 font-medium;
+  }
+
+  /* Pretendard JP / 1.5rem */
+  .p1-b {
+    @apply text-24 font-bold;
+  }
+  .p1-r {
+    @apply text-24 font-regular;
+  }
+  .p1-l {
+    @apply text-24 font-light;
+  }
+
+  /* Pretendard JP / 1.25rem */
+  .p2-b {
+    @apply text-20 font-bold;
+  }
+  .p2-sb {
+    @apply text-20 font-semibold;
+  }
+  .p2-m {
+    @apply text-20 font-medium;
+  }
+  .p2-r {
+    @apply text-20 font-regular;
+  }
+
+  /* Pretendard JP / 1.125rem */
+  .p3-b {
+    @apply text-18 font-bold;
+  }
+  .p3-sb {
+    @apply text-18 font-semibold;
+  }
+  .p3-m {
+    @apply text-18 font-medium;
+  }
+  .p3-r {
+    @apply text-18 font-regular;
+  }
+
+  /* Pretendard JP / 1rem */
+  .p4-b {
+    @apply text-16 font-bold;
+  }
+  .p4-sb {
+    @apply text-16 font-semibold;
+  }
+  .p4-r {
+    @apply text-16 font-regular;
+  }
+
+  /* Pretendard JP / 0.938rem */
+  .p5-sb {
+    @apply text-15 font-semibold;
+  }
+  .p5-m {
+    @apply text-15 font-medium;
+  }
+  .p5-r {
+    @apply text-15 font-regular;
+  }
+
+  /* Pretendard JP / 0.875rem */
+  .p6-sb {
+    @apply text-14 font-semibold;
+  }
+  .p6-m {
+    @apply text-14 font-medium;
+  }
+  .p6-r {
+    @apply text-14 font-regular;
+  }
+
+  /* Pretendard JP / 0.812rem */
+  .p7-r {
+    @apply text-13 font-regular;
+  }
+
+  /* Pretendard JP / 0.75rem */
+  .p8-b {
+    @apply text-12 font-bold;
+  }
+  .p8-sb {
+    @apply text-12 font-semibold;
+  }
+  .p8-r {
+    @apply text-12 font-regular;
+  }
+  .p8-l {
+    @apply text-12 font-light;
+  }
+}

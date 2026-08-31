@@ -1,0 +1,41 @@
+# 레슨 상세 조회
+query courseLesson($where: CourseLessonWhere!) {
+  courseLesson(where: $where) {
+    createdAt
+    id
+    name
+    activities {
+      createdAt
+      dType
+      idx
+      name
+      state
+      id
+      supplementaryData {
+        description
+        title
+        videoUrl
+        activityId
+      }
+      ... on CourseActivityVod {
+        deletedAt
+        vod {
+          id
+          durationInSec
+          providerType
+          url
+        }
+        state
+        name
+        idx
+        id
+        supplementaryData {
+          activityId
+          title
+          description
+          videoUrl
+        }
+      }
+    }
+  }
+}

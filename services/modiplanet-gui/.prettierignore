@@ -1,0 +1,13 @@
+./node_modules
+node_modules
+
+./build
+build
+
+./dist
+dist
+
+*.js
+
+*.graphql
+src/services/old/generated/graphql.ts

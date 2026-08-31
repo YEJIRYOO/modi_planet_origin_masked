@@ -1,0 +1,15 @@
+# create class - 수강신청
+mutation requestCourse ($input: RequestCourseInput!) {
+  requestCourse(input:$input) {
+    result
+    scheduleGroupId
+  }
+}
+
+# requestCourseApplication 강사양성과정 신청
+mutation requestCourseApplication($input: RequestCourseApplicationInput!) {
+  requestCourseApplication(input: $input) {
+    name
+    raw
+  }
+}

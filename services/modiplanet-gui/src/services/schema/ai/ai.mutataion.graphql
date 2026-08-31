@@ -1,0 +1,5 @@
+mutation saveAIModel($input: SaveAIModelInput!) {
+    saveAIModel(input: $input) {
+        id
+    }
+}

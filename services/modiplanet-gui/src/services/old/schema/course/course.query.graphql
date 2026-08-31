@@ -1,0 +1,110 @@
+# 교육상품 리스트 쿼리
+query courseConnection($first: Int, $offset: Int, $orderBy: CourseConnectionOrder, $where: CourseConnectionWhere) {
+  courseConnection(
+    first:$first,
+    offset:$offset,
+    orderBy:$orderBy,
+    where:$where
+  ) {
+    totalCount
+    nodes {
+      id
+      name
+      description
+      type
+      images {
+        id
+        idx
+        url
+      }
+      isEndRecruitment
+      isSale
+      isNew
+      tags {
+        name
+      }
+      maxAge
+      minAge
+      maxParticipant
+      minParticipant
+    }
+  }
+}
+
+# 교육상품 쿼리
+query course ($where: CourseWhere!) {
+  course(where:$where) {
+    id
+    name
+    images {
+      id
+      idx
+      url
+    }
+    type
+    minParticipant
+    maxParticipant
+    minAge
+    maxAge
+    description
+    price
+    feature
+    caution
+    requiredPreparation
+    recruitmentStartDateTime
+    recruitmentEndDateTime
+    recruitmentTarget
+    isEndRecruitment
+    lessons {
+      durationTime
+      name
+      id
+      idx
+      isLive
+    }
+    tags {
+      name
+    }
+    merchandises {
+      id
+      name
+      purchaseType
+      stockCount
+      price
+      type
+    }
+  }
+}
+
+# 교육상품 타입 쿼리
+query getCourseType ($where: CourseWhere!) {
+  course(where:$where) {
+    type
+  }
+}
+
+# 결제페이지에서 사용하는 교육코스 쿼리
+query orderedCourse ($where: CourseWhere!) {
+  course(where:$where) {
+    id
+    name
+    images {
+      id
+      idx
+      url
+    }
+    price
+    merchandises {
+      images {
+        id
+        idx
+        url
+      }
+      id
+      name
+      purchaseType
+      price
+      type
+    }
+  }
+}
