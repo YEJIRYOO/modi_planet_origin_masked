@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: local('Pretendard'),
+    url('/font/PretendardVariable.woff2') format('woff2-variations');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base globals the ai-lab feature relies on (mirrors the LMS app's index.css,
+   trimmed to what the feature actually uses). */
+@layer base {
+  * {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont,
+      'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+  }
+
+  html {
+    @apply text-[16px];
+  }
+
+  #root {
+    @apply min-h-dvh h-full text-font-main leading-[1.2];
+  }
+
+  main * {
+    @apply break-words whitespace-pre-line;
+  }
+
+  /* 마크다운으로 렌더된 에이전트 응답은 ReactMarkdown의 블록 여백으로
+     간격을 관리한다. 전역 whitespace-pre-line이 블록 요소 사이의 구조적
+     개행(\n 텍스트 노드)과 소프트 개행까지 실제 줄바꿈으로 만들어 응답이
+     세로로 과하게 늘어지는 문제를 막는다. */
+  .ai-markdown,
+  .ai-markdown * {
+    @apply whitespace-normal;
+  }
+  .ai-markdown pre,
+  .ai-markdown pre * {
+    @apply whitespace-pre;
+  }
+}
+
+@layer components {
+  /* NextUI Checkbox checkmark fix — ModiAssembly uses CheckboxUI */
+  [data-selected='true'] polyline {
+    stroke-dashoffset: 44 !important;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 마크다운 응답 계층: 하위 불릿(4px)은 촘촘하게 두고, 하위 항목을 가진
+     "1./부모" 그룹 사이만 살짝 띄워 그룹 구분이 보이게 한다. */
+  .ai-markdown li:has(> ul),
+  .ai-markdown li:has(> ol) {
+    margin-bottom: 12px;
+  }
+  .ai-markdown li:has(> ul):last-child,
+  .ai-markdown li:has(> ol):last-child {
+    margin-bottom: 0;
+  }
+  /* 볼드 헤더 + 불릿 패턴: 이전 그룹 리스트가 끝나고 새 그룹 헤더가 시작될 때 */
+  .ai-markdown ul + p,
+  .ai-markdown ol + p {
+    margin-top: 16px;
+  }
+}

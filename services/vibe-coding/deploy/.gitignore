@@ -1,0 +1,6 @@
+# 빌드 산출물 — deploy.sh 가 채움. 커밋하지 않음.
+html/
+
+# 자동배포 로그
+auto-deploy.log
+auto-deploy.log.1

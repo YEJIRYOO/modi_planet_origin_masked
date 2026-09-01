@@ -1,0 +1,17 @@
+# vibe-coding 정적 서빙 컨테이너 (walter 서버 = 192.168.0.95)
+# 한 번만: docker compose up -d
+# 이후 재배포는 ./deploy.sh 만 실행하면 됨 (html/ 갱신 → 컨테이너 재시작 불필요)
+name: vibe-coding
+
+services:
+  vibe-static:
+    image: nginx:alpine
+    container_name: vibe-coding
+    restart: unless-stopped
+    ports:
+      # 호스트 8095 → 컨테이너 80. 192.168.0.102 NPM 이 192.168.0.95:8095 로 proxy_pass.
+      # 8090/8080/3100 은 이미 사용 중이라 8095 사용.
+      - "8095:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
